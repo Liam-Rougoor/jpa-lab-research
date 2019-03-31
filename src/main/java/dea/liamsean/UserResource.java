@@ -41,4 +41,12 @@ public class UserResource {
         User user = userDAO.addFood(username, food);
         return Response.status(Response.Status.CREATED).entity(food.getFood() + " added to user " + username).build();
     }
+
+    @Path("{username}/{food}")
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteFood(@PathParam("username") String username, @PathParam("food") String food){
+        userDAO.removeFood(username, food);
+        return Response.ok("Removed " + food + " from user " + username).build();
+    }
 }

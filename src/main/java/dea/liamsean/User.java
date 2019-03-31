@@ -68,6 +68,19 @@ public class User {
         favouriteFoods.add(food);
     }
 
+    public void removeFood(Food food){
+        favouriteFoods.remove(food);
+    }
+
+    public void removeFood(String foodName){
+        for(Food food : favouriteFoods){
+            if(foodName.equals(food.getFood())){
+                favouriteFoods.remove(food);
+                return;
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "User{" +

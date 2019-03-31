@@ -35,4 +35,13 @@ public class UserDAO {
         entityManager.flush();
         return foundUser;
     }
+
+    public User removeFood(String username, String foodName){
+        entityManager = createNewEntityManager();
+        User foundUser = entityManager.find(User.class, username);
+        foundUser.removeFood(foodName);
+        entityManager.merge(foundUser);
+        entityManager.flush();
+        return foundUser;
+    }
 }
