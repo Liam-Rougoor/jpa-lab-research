@@ -17,7 +17,7 @@ public class User {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Pet> pets;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = Casca)
     @JoinTable( name = "favourite_food",
                 joinColumns = {@JoinColumn(name = "user")},
                 inverseJoinColumns = {@JoinColumn(name = "food")}

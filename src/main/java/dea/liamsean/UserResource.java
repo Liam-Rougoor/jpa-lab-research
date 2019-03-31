@@ -33,6 +33,14 @@ public class UserResource {
         return Response.status(Response.Status.CREATED).entity(createdUser).build();
     }
 
+    @Path("{username}")
+    @DELETE
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteUser(@PathParam("username") String username){
+        userDAO.deleteUser(username);
+        return Response.ok("Deleted user " + username).build();
+    }
+
     @Path("{username}/food")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

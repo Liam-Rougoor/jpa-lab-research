@@ -44,4 +44,11 @@ public class UserDAO {
         entityManager.flush();
         return foundUser;
     }
+
+    public User deleteUser(String username){
+        entityManager = createNewEntityManager();
+        User foundUser = entityManager.find(User.class, username);
+        entityManager.remove(foundUser);
+        return foundUser;
+    }
 }
