@@ -26,4 +26,13 @@ public class UserDAO {
     private EntityManager createNewEntityManager(){
         return Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
     }
+
+    public User addFood(String username, Food food) {
+        entityManager = createNewEntityManager();
+        User foundUser = entityManager.find(User.class, username);
+        foundUser.addFood(food);
+        entityManager.merge(foundUser);
+        entityManager.flush();
+        return foundUser;
+    }
 }

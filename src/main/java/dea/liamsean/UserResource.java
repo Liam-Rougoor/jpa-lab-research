@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Stateless
 @Transactional
@@ -17,31 +18,9 @@ public class UserResource {
 
     UserDAO userDAO = new UserDAO();
 
-    @Path("/testInsertingPetsAndUser")
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String test(){
-        User user = new User();
-        user.setUsername("petlover");
-        user.setPassword("pass");
-        user.setName("Karen");
-        List<Pet> pets = new ArrayList<>();
-        for(int i = 1; i<11;i++){
-            Pet pet = new Pet();
-            pet.setName("Pet " + i);
-            pet.setOwner(user);
-            pets.add(pet);
-        }
-        user.setPets(pets);
-        EntityManager entityManager = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
-        entityManager.persist(user);
-        entityManager.flush();
-        return "Worked?";
-    }
-
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsers(){
+    public Response getAllUsers() {
         List<User> users = userDAO.getAllUsers();
         return Response.ok(users.toString()).build();
     }
@@ -49,8 +28,17 @@ public class UserResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addUser(User user){
+    public Response addUser(User user) {
         User createdUser = userDAO.createUser(user);
         return Response.status(Response.Status.CREATED).entity(createdUser).build();
+    }
+
+    @Path("{username}/food")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addFood(@PathParam("username") String username, Food food) {
+        User user = userDAO.addFood(username, food);
+        return Response.status(Response.Status.CREATED).entity(food.getFood() + " added to user " + username).build();
     }
 }
